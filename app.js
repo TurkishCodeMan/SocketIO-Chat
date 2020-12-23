@@ -20,6 +20,13 @@ app.use(cors({
     exposedHeaders: ["set-cookie"],
 }));
 
+
+//For Production
+if(process.env.NODE_ENV=="production"){
+    app.use(express.static("public"));
+}
+
+
 const socketAPI = require("./socket");
 
 socketAPI.io.attach(http);
@@ -29,13 +36,8 @@ app.use("/api",chatRouter);
 
 require("./config/db")();
 
-http.listen(3000, process.env.HOST, (err) => {
+http.listen(process.env.PORT || 5000, process.env.HOST, (err) => {
     if (!err) {
-        
-        
-
-
-
         console.log("Listening " + process.env.PORT);
     }
 })

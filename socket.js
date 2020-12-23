@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
             if (index < 0) {
                 _room.users.push(userr);
             }
-            socke
+
 
 
             await _room.save();
@@ -67,7 +67,7 @@ io.on("connection", (socket) => {
 
             io.to(socket.joinedRoom.name).emit("welcomeMessage", { msg: `Kanalımıza hoşgeldiniz ${_room.name}`, room: _room, user: userr });
 
-            io.to(socket.joinedRoom.name).emit("users", userr)
+            io.to(socket.joinedRoom.name).emit("users", _room.users)
 
 
         }
@@ -86,7 +86,7 @@ io.on("connection", (socket) => {
             let user = await User.findOne({ _id: data.user._id });
             let message = new Message({
                 msg: data.message,
-                userId: data.user._id,
+                userId: socket.userId,
                 roomId: data.room._id,
 
             })
@@ -113,10 +113,12 @@ io.on("connection", (socket) => {
 
         room.users.splice(index, 1);
 
-        io.to(socket.joinedRoom.name).emit("users", room.users)
         user.isOnline = false;
         await user.save();
         await room.save();
+
+
+        io.to(socket.joinedRoom.name).emit("users", room.users)
 
     })
 
@@ -130,18 +132,15 @@ io.on("connection", (socket) => {
 
         room.users.splice(index, 1);
 
-        io.to(socket.joinedRoom.name).emit("users", room.users)
-
         user.isOnline = false;
         await user.save();
         await room.save();
 
+        io.to(socket.joinedRoom.name).emit("users", room.users)
+
+
+
     })
-
-
-
-
-
 
 
 })

@@ -73,11 +73,13 @@ export default {
       this.users = users;
     },
     oldMessages(messages) {
-      console.log(messages);
       this.roomMessage = messages;
     },
     newMessage(message) {
-      console.log(message);
+      const chatWindow = document.querySelector(".chat-messages");
+
+      var xH = chatWindow.scrollHeight;
+      chatWindow.scrollTo(0, xH);
       this.roomMessage.push(message);
     },
   },
