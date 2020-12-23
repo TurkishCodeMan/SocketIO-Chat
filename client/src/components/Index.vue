@@ -1,12 +1,12 @@
 <template>
   <div class="join-container">
     <header class="join-header">
-      <h1><i class="fas fa-smile"></i> ChatCord</h1>
+      <h1><i class="fas fa-smile"></i> Sohbet & Muhabbet</h1>
     </header>
     <main class="join-main">
       <form>
         <div class="form-control">
-          <label for="username">Username</label>
+          <label for="username">Kullanıcı Adı</label>
           <input
             type="text"
             name="username"
@@ -17,14 +17,14 @@
           />
         </div>
         <div class="form-control">
-          <label for="room">Room</label>
+          <label for="room">Odalar</label>
           <select v-model="user.room" name="room" id="room">
-            <option value="JavaScript">JavaScript</option>
-            <option value="Python">Python</option>
-            <option value="PHP">PHP</option>
-            <option value="C#">C#</option>
-            <option value="Ruby">Ruby</option>
-            <option value="Java">Java</option>
+            <option value="sans">Şanslılar</option>
+            <option value="mor">Morlular</option>
+            <option value="aksam">Akşamcılar</option>
+            <option value="gundem">Gündem</option>
+            <option value="siyaset">Siyaset</option>
+            <option value="bilim">Bilim</option>
           </select>
         </div>
         <button @click.prevent="login" class="btn">Join Chat</button>
@@ -43,9 +43,16 @@ export default {
       },
     };
   },
+
+ 
+
   methods: {
     async login() {
+      if(this.user.username=="" || this.user.room==""){
+        return this.$noty.error("Lütfen Tüm Alanları Doldurunuz")
+      }
       this.$socket.emit("userJoin", this.user);
+      this.$noty.success("Hoşgeldin " + this.user.username);
       this.$router.push({ name: "chat" });
     },
   },

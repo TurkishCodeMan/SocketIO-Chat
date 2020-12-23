@@ -20,5 +20,6 @@ export default {
 
 <style>
 @import "./assets/style.css";
-
+@import '~vuejs-noty/dist/vuejs-noty.css';
+  
 </style>

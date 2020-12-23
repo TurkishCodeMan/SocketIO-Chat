@@ -4,8 +4,9 @@ const roomSchema = new mongoose.Schema({
     name: String,
     users: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User", required: false
+            type: Object,
+            ref: "User", required: false,
+            expires: 3600
         }
     ]
 

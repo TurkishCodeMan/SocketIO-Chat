@@ -42,28 +42,42 @@ export default {
   data() {
     return {
       message: "",
-      users: [],
       welcomeMessage: "",
+      users: [],
+      roomMessage: [],
     };
   },
 
   sockets: {
     welcomeMessage(msg) {
       this.welcomeMessage = msg.msg;
-      console.log(this.welcomeMessage);
+
+      let welcome = {
+        userId: {
+          username: "ChatBot",
+        },
+        date: Date.now().toString(),
+        msg: msg.msg,
+      };
+      this.roomMessage.push(welcome);
       this.setRoom(msg.room);
-      this.setUser(msg.user)
+      this.setUser(msg.user);
+    },
+    sameUser(data) {
+      console.log("bUrasıı");
+      this.$router.push({ name: "index" });
+      return this.$noty.error(data);
     },
 
     users(users) {
       this.users = users;
     },
-
     oldMessages(messages) {
+      console.log(messages);
       this.roomMessage = messages;
     },
     newMessage(message) {
-      console.log(message)
+      console.log(message);
       this.roomMessage.push(message);
     },
   },
@@ -71,8 +85,8 @@ export default {
     appMessage: Message,
   },
   methods: {
-    ...mapGetters(["getUser", "getRoomMessage", "getRoom"]),
-    ...mapMutations(["setRoom","setUser"]),
+    ...mapGetters(["getUser", "getRoomMessage", "getRoom", "getUsers"]),
+    ...mapMutations(["setRoom", "setUser", "setUsers", "pushUsers"]),
     sendMessage() {
       this.$socket.emit("chatMessage", {
         user: this.user,
@@ -88,14 +102,6 @@ export default {
     },
     room() {
       return this.getRoom();
-    },
-    roomMessage: {
-      get: function () {
-        return this.getRoomMessage();
-      },
-      set: function (value) {
-        this.$store.commit("setRoomMessage", value);
-      },
     },
   },
 };

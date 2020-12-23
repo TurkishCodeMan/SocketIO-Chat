@@ -21,6 +21,7 @@ app.use(cors({
 }));
 
 const socketAPI = require("./socket");
+
 socketAPI.io.attach(http);
 
 
@@ -30,6 +31,11 @@ require("./config/db")();
 
 http.listen(3000, process.env.HOST, (err) => {
     if (!err) {
+        
+        
+
+
+
         console.log("Listening " + process.env.PORT);
     }
 })

@@ -12,7 +12,12 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Message", required: false
         }
-    ]
+    ],
+
+    isOnline:{
+        type:Boolean,
+        default:false
+    }
 
 });
 

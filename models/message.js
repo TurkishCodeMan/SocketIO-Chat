@@ -12,12 +12,17 @@ const messageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    roomId:{
+    roomId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Room"
-    }
+    },
+    expireAt: {
+        type: Date,
+        default: Date.now,
+        index: { expires: '60m' },
+    },
 })
 
 
-const Message=mongoose.model("Message",messageSchema);
-module.exports=Message;
+const Message = mongoose.model("Message", messageSchema);
+module.exports = Message;
